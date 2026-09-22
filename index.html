@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>SHE Claims — Call Center System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="app-shell">
+  <div class="brand">
+    <div class="brand-mark">SHE</div>
+    <div class="brand-text">
+      <div class="t1">SHE Claims Department</div>
+      <div class="t2">Call Center System</div>
+    </div>
+  </div>
+
+  <aside class="sidebar" id="sidebar">
+    <div class="nav-group">
+      <div class="nav-item" data-view="dashboard">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></svg>
+        Dashboard
+      </div>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-group-label">Claim Intimation</div>
+      <div class="nav-item" data-view="new-cashless">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21c4.97-3.6 8-7.3 8-11a8 8 0 1 0-16 0c0 3.7 3.03 7.4 8 11Z"/><circle cx="12" cy="10" r="2.4"/></svg>
+        New Cashless Intimation
+      </div>
+      <div class="nav-item" data-view="reimbursement">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h13l3 3v13H4z"/><path d="M8 9h8M8 13h8M8 17h5"/></svg>
+        Reimbursement Intimation
+      </div>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-group-label">Claim Coordination</div>
+      <div class="nav-item" data-view="discharge">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 5H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h4"/><path d="M13 16l4-4-4-4M17 12H9"/></svg>
+        Discharge Update
+      </div>
+      <div class="nav-item" data-view="approvals">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg>
+        Approval Requests
+        <span class="count" id="nav-count-approvals">0</span>
+      </div>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-group-label">Directory &amp; Lookup</div>
+      <div class="nav-item" data-view="claim-search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+        Policy &amp; Claim Search
+      </div>
+      <div class="nav-item" data-view="hospitals">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 21V7l8-4 8 4v14"/><path d="M9 21v-6h6v6M12 9v4M10 11h4"/></svg>
+        Approved Hospitals
+      </div>
+      <div class="nav-item" data-view="roster">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="8" r="3.2"/><path d="M2.5 20c0-3.6 3-6 6.5-6s6.5 2.4 6.5 6"/><path d="M17 8.2a3 3 0 1 1 3.4 3M17.5 14c2.7.2 4.5 2 4.5 4.6"/></svg>
+        Coordinator Roster
+      </div>
+    </div>
+
+    <div class="nav-group">
+      <div class="nav-group-label">Records</div>
+      <div class="nav-item" data-view="call-log">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3-8.7A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .3 2 .7 3a2 2 0 0 1-.5 2.1L8 10a16 16 0 0 0 6 6l1.2-1.3a2 2 0 0 1 2.1-.5c1 .4 2 .6 3 .7a2 2 0 0 1 1.7 2Z"/></svg>
+        Call Log
+      </div>
+    </div>
+
+    <div class="sidebar-foot">v0.9 prototype · not for production use</div>
+  </aside>
+
+  <header class="topbar">
+    <div>
+      <h1 id="topbar-title">Dashboard</h1>
+      <div class="subtitle" id="topbar-sub">Live overview of cashless &amp; reimbursement activity</div>
+    </div>
+    <div class="quick-search">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+      <input type="text" id="global-search" placeholder="Search policy, member, NIC or contact number…">
+    </div>
+    <div class="topbar-right">
+      <div class="shift-badge"><span class="dot"></span> On shift · Day</div>
+      <div class="officer">
+        <div class="officer-avatar">RP</div>
+        <div>
+          <div class="officer-name">R. Perera</div>
+          <div class="officer-role">Call Center Officer</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="main" id="main">
+
+    <!-- =================== DASHBOARD =================== -->
+    <section class="view active" id="view-dashboard">
+      <div class="view-head">
+        <div>
+          <div class="eyebrow">Call Center Overview</div>
+          <h2>Today's cashless claim activity</h2>
+          <div class="desc">Snapshot of intimations, approvals and coordinator workload across all approved hospitals.</div>
+        </div>
+        <button class="btn btn-primary" data-goto="new-cashless">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 5v14M5 12h14"/></svg>
+          New cashless intimation
+        </button>
+      </div>
+
+      <div class="stat-grid" id="stat-grid"></div>
+
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-head">
+            <h3>Recent claim activity</h3>
+            <span class="meta">Latest 8 movements</span>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Claim ref.</th><th>Member</th><th>Hospital</th><th>Stage</th><th>Updated</th></tr></thead>
+              <tbody id="dash-recent-body"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div>
+          <div class="card">
+            <div class="card-head">
+              <h3>Pending approvals</h3>
+              <span class="meta" id="dash-approval-count"></span>
+            </div>
+            <div id="dash-approval-list"></div>
+          </div>
+          <div class="card">
+            <div class="card-head">
+              <h3>Coordinators on shift</h3>
+              <span class="meta">Live availability</span>
+            </div>
+            <div id="dash-roster-list"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================== NEW CASHLESS INTIMATION =================== -->
+    <section class="view" id="view-new-cashless">
+      <div class="view-head">
+        <div>
+          <div class="eyebrow">Claim Intimation · Cashless</div>
+          <h2>New cashless claim intimation</h2>
+          <div class="desc">Capture policy, member, hospital and admission details to register a new hospitalization notification.</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="section-title"><span class="n">1</span> Policy &amp; member lookup</div>
+        <div class="form-grid cols-2">
+          <div class="field">
+            <label>Search by</label>
+            <select id="csh-lookup-type">
+              <option>Policy Number</option>
+              <option>Member Number</option>
+              <option>NIC / Identification Number</option>
+              <option>Contact Number</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Value <span class="req">Required</span></label>
+            <input type="text" id="csh-lookup-value" placeholder="e.g. POL-HEM-00231 or 199045701234">
+          </div>
+        </div>
+        <div class="form-actions" style="margin-top:12px; padding-top:0; border-top:none; justify-content:flex-start;">
+          <button class="btn btn-primary btn-sm" id="csh-lookup-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+            Validate &amp; retrieve
+          </button>
+          <span class="hint" style="align-self:center;">Try "POL-HEM-0231", "Kumari", or "0771234567"</span>
+        </div>
+
+        <div id="csh-lookup-result" style="margin-top:16px;"></div>
+      </div>
+
+      <div class="card" id="csh-form-card" style="display:none;">
+        <div class="section-title"><span class="n">2</span> Hospital &amp; admission details</div>
+        <div class="form-grid">
+          <div class="field span-2">
+            <label>Approved hospital <span class="req">Required</span></label>
+            <select id="csh-hospital">
+              <option value="">Select from approved hospital list…</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Room number</label>
+            <input type="text" placeholder="e.g. 4B-Ward" id="csh-room">
+          </div>
+          <div class="field">
+            <label>Admission date <span class="req">Required</span></label>
+            <input type="date" id="csh-admdate">
+            <span class="hint">Validated against policy period</span>
+          </div>
+          <div class="field">
+            <label>Admission time <span class="req">Required</span></label>
+            <input type="time" id="csh-admtime">
+          </div>
+          <div class="field">
+            <label>Patient NIC number</label>
+            <input type="text" placeholder="200145701234" id="csh-nic">
+          </div>
+          <div class="field span-3">
+            <label>Diagnosis / reason for admission <span class="req">Required</span></label>
+            <textarea placeholder="Brief clinical reason for hospitalization" id="csh-diagnosis"></textarea>
+          </div>
+        </div>
+
+        <div class="section-title" style="margin-top:20px;"><span class="n">3</span> Caller information</div>
+        <div class="form-grid">
+          <div class="field">
+            <label>Caller name <span class="req">Required</span></label>
+            <input type="text" id="csh-caller-name" placeholder="Full name">
+          </div>
+          <div class="field">
+            <label>Relationship to member</label>
+            <select id="csh-caller-rel">
+              <option>Self</option><option>Spouse</option><option>Parent</option><option>Child</option><option>Hospital staff</option><option>Other</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Contact number <span class="req">Required</span></label>
+            <input type="text" id="csh-caller-contact" placeholder="07XXXXXXXX">
+          </div>
+          <div class="field">
+            <label>Caller NIC number</label>
+            <input type="text" id="csh-caller-nic" placeholder="Optional">
+          </div>
+          <div class="field readonly">
+            <label>Approximate claim amount</label>
+            <input type="text" value="Rs. 150,000.00" readonly>
+            <span class="hint">Recorded automatically at admission stage</span>
+          </div>
+          <div class="field readonly">
+            <label>Intimation date &amp; time</label>
+            <input type="text" id="csh-now" readonly>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+        <div class="checkline"><input type="checkbox" id="csh-confirm"> I confirm the above information was verified with the caller and is accurate to the best of my knowledge.</div>
+
+        <div class="form-actions">
+          <button class="btn" data-reset="new-cashless">Clear form</button>
+          <button class="btn btn-primary" id="csh-submit">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6L9 17l-5-5"/></svg>
+            Register cashless intimation
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================== REIMBURSEMENT =================== -->
+    <section class="view" id="view-reimbursement">
+      <div class="view-head">
+        <div>
+          <div class="eyebrow">Claim Intimation · Reimbursement</div>
+          <h2>New reimbursement claim intimation</h2>
+          <div class="desc">Register an indoor, OPD or other reimbursement claim. Discharge information is not required for this claim type.</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="section-title"><span class="n">1</span> Policy &amp; member lookup</div>
+        <div class="form-grid cols-2">
+          <div class="field">
+            <label>Search by</label>
+            <select id="rmb-lookup-type">
+              <option>Policy Number</option>
+              <option>Member Number</option>
+              <option>NIC / Identification Number</option>
+              <option>Contact Number</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Value <span class="req">Required</span></label>
+            <input type="text" id="rmb-lookup-value" placeholder="e.g. POL-DLG-1042">
+          </div>
+        </div>
+        <div class="form-actions" style="margin-top:12px; padding-top:0; border-top:none; justify-content:flex-start;">
+          <button class="btn btn-primary btn-sm" id="rmb-lookup-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+            Validate &amp; retrieve
+          </button>
+          <span class="hint" style="align-self:center;">Try "POL-DLG-1042" or "Fernando"</span>
+        </div>
+        <div id="rmb-lookup-result" style="margin-top:16px;"></div>
+      </div>
+
+      <div class="card" id="rmb-form-card" style="display:none;">
+        <div class="section-title"><span class="n">2</span> Claim &amp; treatment details</div>
+        <div class="form-grid">
+          <div class="field">
+            <label>Claim type <span class="req">Required</span></label>
+            <select id="rmb-type"><option>Indoor</option><option>OPD</option><option>Dental</option><option>Spectacles</option><option>Other</option></select>
+          </div>
+          <div class="field span-2">
+            <label>Hospital / clinic name</label>
+            <input type="text" id="rmb-hospital" placeholder="Treatment facility name">
+          </div>
+          <div class="field">
+            <label>Treatment date</label>
+            <input type="date" id="rmb-date">
+          </div>
+          <div class="field span-2">
+            <label>Diagnosis / reason for treatment <span class="req">Required</span></label>
+            <input type="text" id="rmb-diagnosis" placeholder="Brief clinical reason">
+          </div>
+        </div>
+
+        <div class="section-title" style="margin-top:20px;"><span class="n">3</span> Caller information</div>
+        <div class="form-grid">
+          <div class="field">
+            <label>Caller name <span class="req">Required</span></label>
+            <input type="text" id="rmb-caller-name">
+          </div>
+          <div class="field">
+            <label>Relationship to member</label>
+            <select id="rmb-caller-rel"><option>Self</option><option>Spouse</option><option>Parent</option><option>Child</option><option>Other</option></select>
+          </div>
+          <div class="field">
+            <label>Contact number <span class="req">Required</span></label>
+            <input type="text" id="rmb-caller-contact" placeholder="07XXXXXXXX">
+          </div>
+        </div>
+
+        <div class="divider"></div>
+        <div class="card" style="background:var(--amber-bg); border-color:var(--amber-line);">
+          <strong style="font-size:12.6px;">Required supporting documents</strong>
+          <p style="font-size:12.3px; margin-top:6px; color:var(--ink-soft);">Original bills &amp; receipts, discharge summary / medical report, prescription copies, diagnostic reports, and a duly completed reimbursement claim form. Advise the caller to submit documents within the policy-defined window.</p>
+        </div>
+
+        <div class="form-actions">
+          <button class="btn" data-reset="reimbursement">Clear form</button>
+          <button class="btn btn-primary" id="rmb-submit">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M20 6L9 17l-5-5"/></svg>
+            Register reimbursement intimation
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- =================== DISCHARGE UPDATE =================== -->
+    <section class="view" id="view-discharge">
+      <div class="view-head">
+        <div>
+          <div class="eyebrow">Claim Coordination</div>
+          <h2>Cashless discharge information update</h2>
+          <div class="desc">Search an active cashless claim to record discharge details and route it to the assigned claim coordinator.</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="form-grid cols-2">
+          <div class="field span-2">
+            <label>Claim reference number, policy number, member number, contact or NIC</label>
+            <input type="text" id="dis-search" placeholder="e.g. CSH-2026-00842">
+          </div>
+        </div>
+        <div class="form-actions" style="margin-top:6px; padding-top:0; border-top:none; justify-content:flex-start;">
+          <button class="btn btn-primary btn-sm" id="dis-search-btn">Find claim</button>
+          <span class="hint" style="align-self:center;">Try "CSH-2026-00842" — an admitted claim awaiting discharge</span>
+        </div>
+      </div>
+
+      <div id="dis-result"></div>
+    </section>
+
+    <!-- =================== APPROVAL REQUESTS =================== -->
+    <section class="view" id="view-approvals">
+      <div class="view-head">
+        <div>
+          <div class="eyebrow">Claim Coordination</div>
+          <h2>Special approval requests</h2>
+          <div class="desc">Cashless claims that could not be accepted at intimation due to a policy condition, routed to authorized officers.</div>
+        </div>
+        <button class="btn" id="appr-new-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 5v14M5 12h14"/></svg>
+          Raise approval request
+        </button>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Claim ref.</th><th>Member / Hospital</th><th>Restriction</th><th>Requested by</th><th>Authorized officer</th><th>Status</th><th></th></tr></thead>
+          <tbody id="appr-body"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- =================== POLICY & CLAIM SEARCH =================== -->
+    <section class="view" id="view-claim-search">
+      <div class="view-head">
+        <div>
+          <div class="eyebrow">Directory &amp; Lookup</div>
+          <h2>Policy &amp; claim search</h2>
+          <div class="desc">Look up a policy or member to view coverage, benefit limits, and complete claim history with real-time status tracking.</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="form-grid cols-2">
+          <div class="field">
+            <label>Search by</label>
+            <select id="pol-lookup-type">
+              <option>Policy Number</option><option>Member Number</option><option>NIC / Identification Number</option><option>Contact Number</option>
+            </select>
+          </div>
+          <div class="field">
+            <label>Value</label>
+            <input type="text" id="pol-lookup-value" placeholder="e.g. POL-JKH-0099">
+          </div>
+        </div>
+        <div class="form-actions" style="margin-top:10px; padding-top:0; border-top:none; justify-content:flex-start;">
+          <button class="btn btn-primary btn-sm" id="pol-lookup-btn">Search</button>
+          <span class="hint" style="align-self:center;">Try "POL-JKH-0099", "POL-HEM-0231" or "POL-DLG-1042"</span>
+        </div>
+      </div>
+
+      <div id="pol-result"></div>
+    </section>
+
+    <!-- =================== APPROVED HOSPITALS =================== -->
+    <section class="view" id="view-hospitals">
+      <div class="view-head">
+        <div>
+          <div class="eyebrow">Directory &amp; Lookup</div>
+          <h2>Approved cashless hospitals</h2>
+          <div class="desc">Network hospitals available for cashless facility, searchable by name, location, district or hospital code.</div>
+        </div>
+      </div>
+      <div class="card" style="padding-bottom:12px;">
+        <div class="form-grid cols-2">
+          <div class="field span-2">
+            <label>Search hospitals</label>
+            <input type="text" id="hosp-search" placeholder="Search by name, district or hospital code…">
+          </div>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Code</th><th>Hospital</th><th>District</th><th>Telephone</th><th>Cashless facility</th><th>Status</th></tr></thead>
+          <tbody id="hosp-body"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- =================== ROSTER =================== -->
+    <section class="view" id="view-roster">
+      <div class="view-head">
+        <div>
+          <div class="eyebrow">Directory &amp; Lookup</div>
+          <h2>Claim coordinator roster</h2>
+          <div class="desc">Identify the available claim coordinator by hospital assignment, shift and current status — including backup coverage.</div>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Coordinator</th><th>Emp. no.</th><th>Assigned hospital(s)</th><th>Shift</th><th>Contact</th><th>Availability</th><th>Backup</th></tr></thead>
+          <tbody id="roster-body"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- =================== CALL LOG =================== -->
+    <section class="view" id="view-call-log">
+      <div class="view-head">
+        <div>
+          <div class="eyebrow">Records</div>
+          <h2>Call log</h2>
+          <div class="desc">Every claim-related call is recorded here for monitoring, quality assurance, dispute resolution and audit.</div>
+        </div>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Date &amp; time</th><th>Claim ref.</th><th>Caller</th><th>Officer</th><th>Purpose</th><th>Outcome / remarks</th></tr></thead>
+          <tbody id="calllog-body"></tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<div class="toast-wrap" id="toast-wrap"></div>
+
+<!-- claim detail drawer -->
+<div class="drawer-overlay" id="drawer-overlay"></div>
+<div class="drawer" id="drawer">
+  <div class="drawer-head">
+    <div>
+      <div class="ref" id="drawer-ref">—</div>
+      <div class="sub" id="drawer-sub">—</div>
+    </div>
+    <button class="drawer-x" id="drawer-close">✕</button>
+  </div>
+  <div class="drawer-body" id="drawer-body"></div>
+</div>
+
+<!-- generic modal -->
+<div class="modal-overlay" id="modal-overlay">
+  <div class="modal" id="modal-inner"></div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
